@@ -1,0 +1,27 @@
+version: '2.0'
+services:
+  seafile:
+    image: seafileltd/seafile:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /opt/seafile-data:/shared  # Change /opt/seafile-data to the path where you want to store Seafile data
+    environment:
+      - DB_HOST=db
+      - DB_ROOT_PASSWD=db_root_password  # Change db_root_password to your chosen password
+      - TIME_ZONE=Etc/UTC
+      - SEAFILE_ADMIN_EMAIL=me@example.com  # Change to your admin email
+      - SEAFILE_ADMIN_PASSWORD=a_very_secret_password  # Change to your admin password
+      - SEAFILE_SERVER_LETSENCRYPT=false
+      - SEAFILE_SERVER_HOSTNAME=seafile.example.com  # Change to your Seafile server's hostname
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=db_root_password  # Use the same password here as above
+      - MYSQL_LOG_CONSOLE=true
+    volumes:
+      - /opt/seafile-mysql:/var/lib/mysql  # Change /opt/seafile-mysql to the path where you want to store MySQL data
