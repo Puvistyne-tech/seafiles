@@ -3,7 +3,7 @@ services:
   seafile:
     image: seafileltd/seafile:latest
     ports:
-      - "80:80"
+      - "8080:80"
       - "443:443"
     volumes:
       - ./seafile-data:/shared  # Change /opt/seafile-data to the path where you want to store Seafile data
